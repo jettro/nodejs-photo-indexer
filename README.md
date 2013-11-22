@@ -24,20 +24,20 @@ Kibana -> Kibana should be pointed to your elasticsearch server. For now I assum
 
 Now we can obtain the sources and run the program. Clone this repository if you are reading this online. Step into the folder and download the required libraries using npm.
 
-# git clone git@github.com:jettro/nodejs-photo-indexer.git
-# cd nodejs-photo-indexer
-# npm install
+> git clone git@github.com:jettro/nodejs-photo-indexer.git
+> cd nodejs-photo-indexer
+> npm install
 
 After npm install you should have the folder node_modules with the modules exif2 and walk. The exif2 library is used as an interface to the exiftool library, walk is used to traverse a directory structure. Next step is to initialize the elasticsearch index. We have a node.js command for that.
 
-# node initindex
+> node initindex
 
 Now you can check the mapping for the created index, browse to the following url (or use curl):
 http://localhost:9200/myimages/local/_mapping?pretty
 
 This should show you part of the content from the settings.json file. This is it, now is the moment you can start importing images. You can run the app nd provide the initial folder to start scanning.
 
-# node app /path/to/your/Pictures
+> node app /path/to/your/Pictures
 
 Now you should see the log showing which pictures it is indexing and which files it skips.
 
