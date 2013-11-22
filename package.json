@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-photo-indexer",
+  "version": "0.1.0",
+  "description": "Node js sample to index photo metadata using the exiftool",
+  "main": "app.js",
+  "dependencies": {
+    "exif2": "",
+    "walk": ""
+  },
+  "author": "You",
+  "license": "BSD",
+  "private": true
+}
