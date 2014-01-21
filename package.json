@@ -5,7 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "exif2": "",
-    "walk": ""
+    "walk": "",
+    "elasticsearch": ""
   },
   "author": "You",
   "license": "BSD",

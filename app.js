@@ -1,8 +1,10 @@
 var exif = require('exif2');
-var http = require('http');
 var walk = require('walk');
+var elasticsearch = require('elasticsearch');
 
 var walker  = walk.walk('/Users/jcoenradie/Pictures', { followLinks: false });
+
+var client = new elasticsearch.Client();
 
 walker.on('file', function(root, stat, next) {
     // Add this file to the list of files
@@ -39,41 +41,15 @@ function extractData(file) {
 }
 
 function sendToElasticsearch(searchObj) {
-	var searchString = JSON.stringify(searchObj);
-
-	var headers = {
-			'Content-Type': 'application/json',
-			'Content-Length': searchString.length
-	};
-
-	var opts = {
-		host: 'localhost',
-		port: 9200,
-		path: '/myimages/local',
-		method: 'POST',
-		headers: headers
-	};
-
-	// Setup the request.  The options parameter is
-	// the object we defined above.
-	var req = http.request(opts, function(res) {
-		res.setEncoding('utf-8');
-
-		var responseString = '';
-
-		res.on('data', function(data) {
-			responseString += data;
-		});
-
-		res.on('end', function() {
-			var resultObject = JSON.parse(responseString);
-		});
+	client.index({
+		index: 'myimages',
+		type: 'local',
+		body: searchObj
+	}, function(err,response) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(response);
+		}
 	});
-
-	req.on('error', function(e) {
-	  console.log(e);
-	});
-
-	req.write(searchString);
-	req.end();
 }
