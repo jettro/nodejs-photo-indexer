@@ -1,6 +1,7 @@
 var elasticsearch = require('elasticsearch');
 
 var client = new elasticsearch.Client({
+	host: '192.168.1.10:9200',
 	log:'trace'
 });
 
@@ -31,7 +32,7 @@ function sendSettings(settings) {
 		body: {
 			"index": {
 		        "number_of_shards": 1,
-		        "number_of_replicas": 0				
+		        "number_of_replicas": 1				
 			},
 	        "analysis": {
 	            "analyzer": {
@@ -59,29 +60,31 @@ function sendMapping() {
 		index:'myimages',
 		type:'local',
 		body: {
-            "_all": {
-                "enabled": true
-            },
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "camera": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "lens": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "createDate": {
-                    "type": "date",
-                    "format": "yyyy:MM:dd HH:mm:ss"
-                },
-                "iso": {
-                    "type": "integer"
-                }
+			"local": {
+	            "_all": {
+	                "enabled": true
+	            },
+	            "properties": {
+	                "name": {
+	                    "type": "string",
+	                    "index": "not_analyzed"
+	                },
+	                "camera": {
+	                    "type": "string",
+	                    "index": "not_analyzed"
+	                },
+	                "lens": {
+	                    "type": "string",
+	                    "index": "not_analyzed"
+	                },
+	                "createDate": {
+	                    "type": "date",
+	                    "format": "yyyy:MM:dd HH:mm:ss"
+	                },
+	                "iso": {
+	                    "type": "integer"
+	                }
+	            }
             }
         }
 	}, function(err,response) {
